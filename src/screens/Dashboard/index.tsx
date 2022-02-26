@@ -12,7 +12,8 @@ import {
   HighlightCards,
   Transactions,
   Title,
-  TransactionList
+  TransactionList,
+  LogoutButton
  } from './styles'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { HighlightCard } from '../../components/HighlightCard'
@@ -72,7 +73,9 @@ export function Dashboard() {
             </User>
           </UserInfo>
 
-        <Icon name="power" size={RFValue(24)} color="#FFF" />
+        <LogoutButton onPress={() => {}}>
+          <Icon name="power" size={RFValue(24)} color="#FFF" />
+        </LogoutButton>
 
         </UserWrapper>
       </Header>

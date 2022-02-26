@@ -91,3 +91,5 @@ export const TransactionList = styled(
     paddingBottom: getBottomSpace()
   }
 })``;
+
+export const LogoutButton = styled.TouchableOpacity``
