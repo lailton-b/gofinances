@@ -93,3 +93,10 @@ export const TransactionList = styled(
 })``;
 
 export const LogoutButton = styled.TouchableOpacity``
+
+export const LoadContainer = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.background};
+  justify-content: center;
+  align-items: center;
+`
