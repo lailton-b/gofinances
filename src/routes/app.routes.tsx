@@ -1,13 +1,15 @@
 import React from 'react'
-import { Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native';
 import { BottomTabNavigationOptions, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Dashboard } from '../screens/Dashboard';
 import { Register } from '../screens/Register';
 import { useTheme } from 'styled-components';
+import { BottomTabParamList } from './routes';
+import { Resume } from '../screens/Resume';
+import { StatusBar } from 'react-native';
 
-const { Navigator, Screen } = createBottomTabNavigator()
+const { Navigator, Screen } = createBottomTabNavigator<BottomTabParamList>()
 
 export function AppRoutes() {
   const theme = useTheme();
@@ -24,6 +26,7 @@ export function AppRoutes() {
 
   return (
     <NavigationContainer>
+      <StatusBar barStyle='light-content' />
       <Navigator
         screenOptions={screenOptions}
       >
@@ -55,7 +58,7 @@ export function AppRoutes() {
         />
         <Screen
           name="Resumo"
-          component={Register}
+          component={Resume}
           options={{
             tabBarIcon: (({ size, color }) => 
               <MaterialIcons 
