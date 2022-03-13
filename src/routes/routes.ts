@@ -3,3 +3,7 @@ export type BottomTabParamList = {
   Cadastrar: undefined;
   Resumo: undefined;
 };
+
+export type PrivateRoutes = {
+  SignIn: undefined;
+}
