@@ -25,6 +25,7 @@ import {
   Month,
   LoadContainer
 } from './styles'
+import { useAuth } from '../../hooks/auth'
 
 interface TransactionData {
   type: 'positive' | 'negative';
@@ -45,6 +46,7 @@ interface CategoryData {
 
 export function Resume() {
   const theme = useTheme()
+  const { user } = useAuth()
   const bottomTabBarHeight = useBottomTabBarHeight()
   const [isLoading, setIsLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -92,7 +94,7 @@ export function Resume() {
   }
 
   async function loadData() {
-    const response = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.TRANSACTIONS)
+    const response = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.TRANSACTIONS + user.id)
     const transactions: TransactionData[] = response ? JSON.parse(response) : []
     const expenses = transactions.filter(({ type, date }) => 
       type === 'negative' && 

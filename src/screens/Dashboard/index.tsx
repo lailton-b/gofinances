@@ -26,6 +26,7 @@ import { HighlightCard } from '../../components/HighlightCard'
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard'
 import { ASYNC_STORAGE_KEYS } from '../../utils/asyncStorageKeys'
 import { moneyLabel } from '../../utils/fnUtils'
+import { useAuth } from '../../hooks/auth'
 
 export interface DataListProps extends TransactionCardProps {
   id: string;
@@ -44,6 +45,7 @@ interface HighlightData {
 
 export function Dashboard() {
   const theme = useTheme()
+  const { signOut, user } = useAuth()
   const [isLoading, setIsLoading] = useState(true)
   const [transactions, setTransactions] = useState<DataListProps[]>([])
   const [highlightData, setHighlightData] = useState<HighlightData>({} as HighlightData)
@@ -92,7 +94,7 @@ export function Dashboard() {
   async function loadTransactions() {
     entriesSum = 0;
     expensesSum = 0;
-    const response = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.TRANSACTIONS)
+    const response = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.TRANSACTIONS + user.id)
     const transactions: DataListProps[] = response ? JSON.parse(response) : []
     const transactionsFormatted = transactions.map(formatTransaction)
     const lastEntryTransactionDate = getLastTransactionDate(transactions, 'positive')
@@ -137,14 +139,14 @@ export function Dashboard() {
 
         <UserWrapper>
           <UserInfo>
-            <Photo source={{ uri: 'https://avatars.githubusercontent.com/u/54367053?v=4' }} />
+            <Photo source={{ uri: user.photo }} />
             <User>
               <UserGreeting>Olá,</UserGreeting>
-              <UserName>Lailton</UserName>
+              <UserName>{ user.name }</UserName>
             </User>
           </UserInfo>
 
-        <LogoutButton onPress={() => {}}>
+        <LogoutButton onPress={signOut}>
           <Icon name="power" size={RFValue(24)} color="#FFF" />
         </LogoutButton>
 

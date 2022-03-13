@@ -21,6 +21,7 @@ import {
 } from './styles'
 import { useNavigation } from '@react-navigation/native'
 import { ASYNC_STORAGE_KEYS } from '../../utils/asyncStorageKeys'
+import { useAuth } from '../../hooks/auth'
 
 interface FormData {
   name: string;
@@ -39,6 +40,7 @@ const schema = Yup.object().shape({
 })
 
 export function Register() {
+  const { user } = useAuth()
   const [transactionType, setTransactionType] = useState('')
   const [category, setCategory] = useState({
     key: 'category',
@@ -85,14 +87,14 @@ export function Register() {
     }
 
     try {
-      const data = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.TRANSACTIONS)
+      const data = await AsyncStorage.getItem(ASYNC_STORAGE_KEYS.TRANSACTIONS + user.id)
       const currentData = data ? JSON.parse(data) : []
       const dataFormatted = [
         ...currentData,
         newTransaction
       ]
 
-      await AsyncStorage.setItem(ASYNC_STORAGE_KEYS.TRANSACTIONS, JSON.stringify(dataFormatted))
+      await AsyncStorage.setItem(ASYNC_STORAGE_KEYS.TRANSACTIONS + user.id, JSON.stringify(dataFormatted))
 
       reset()
       setTransactionType('')
